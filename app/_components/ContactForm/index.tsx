@@ -1,22 +1,26 @@
-'use client';
+"use client";
 
-import { createContactData } from '@/app/_actions/contact';
-import { useFormState } from 'react-dom';
-// import { sendGAEvent } from '@next/third-parties/google';
-import styles from './index.module.css';
+import { sendGTMEvent } from "@next/third-parties/google";
+import { createContactData } from "@/app/_actions/contact";
+import { useFormState } from "react-dom";
+import { sendGAEvent } from "@next/third-parties/google";
+import styles from "./index.module.css";
 
 const initialState = {
-  status: '',
-  message: '',
+  status: "",
+  message: "",
 };
 
 export default function ContactForm() {
   const [state, formAction] = useFormState(createContactData, initialState);
   console.log(state);
   // const handleSubmit = () => {
-  //   sendGAEvent({ event: 'contact', value: 'submit' });
+  //   sendGAEvent({ event: "contact", value: "submit" });
   // };
-  if (state.status === 'success') {
+  const handleSubmit = () => {
+    sendGTMEvent({ event: "contact", value: "submit" });
+  };
+  if (state.status === "success") {
     return (
       <p className={styles.success}>
         お問い合わせいただき、ありがとうございます。
@@ -26,53 +30,32 @@ export default function ContactForm() {
     );
   }
   return (
-    <form className={styles.form} action={formAction}>
-     {/* <form className={styles.form} action={formAction} onSubmit={handleSubmit}> */}
+    <form className={styles.form} action={formAction} onSubmit={handleSubmit}>
       <div className={styles.horizontal}>
         <div className={styles.item}>
           <label className={styles.label} htmlFor="lastname">
             姓
           </label>
-          <input
-            className={styles.textfield}
-            type="text"
-            id="lastname"
-            name="lastname"
-          />
+          <input className={styles.textfield} type="text" id="lastname" name="lastname" />
         </div>
         <div className={styles.item}>
           <label className={styles.label} htmlFor="firstname">
             名
           </label>
-          <input
-            className={styles.textfield}
-            type="text"
-            id="firstname"
-            name="firstname"
-          />
+          <input className={styles.textfield} type="text" id="firstname" name="firstname" />
         </div>
       </div>
       <div className={styles.item}>
         <label className={styles.label} htmlFor="company">
           会社名
         </label>
-        <input
-          className={styles.textfield}
-          type="text"
-          id="company"
-          name="company"
-        />
+        <input className={styles.textfield} type="text" id="company" name="company" />
       </div>
       <div className={styles.item}>
         <label className={styles.label} htmlFor="email">
           メールアドレス
         </label>
-        <input
-          className={styles.textfield}
-          type="text"
-          id="email"
-          name="email"
-        />
+        <input className={styles.textfield} type="text" id="email" name="email" />
       </div>
       <div className={styles.item}>
         <label className={styles.label} htmlFor="message">
@@ -81,9 +64,7 @@ export default function ContactForm() {
         <textarea className={styles.textarea} id="message" name="message" />
       </div>
       <div className={styles.actions}>
-        {state.status === 'error' && (
-          <p className={styles.error}>{state.message}</p>
-        )}
+        {state.status === "error" && <p className={styles.error}>{state.message}</p>}
         <input type="submit" value="送信する" className={styles.button} />
       </div>
     </form>
