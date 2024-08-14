@@ -92,7 +92,9 @@ export async function createContactData(_prevState: any, formData: FormData) {
 
   try {
     await result.json();
+    console.log(result);
   } catch (e) {
+    console.log("catch");
     console.log(e);
     return {
       status: "error",
