@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://my-next-project-ruddy.vercel.app/sitemap.xml
